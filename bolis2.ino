@@ -2,10 +2,14 @@
 //  Name    : shiftOutCode, 4 Digit 7 segment display
 //  Author  : Edgar Solis Vizcarra
 //  Date    : 29 Mar, 2017
-//  Modified: 29 Mar, 2017
-//  Version : 1.0
-//  Notes   : Code for using a 74HC595 Shift Register
-//          : to count display numbers in a 4 digit display
+//  Modified: 16 Apr, 2017
+//  Version : 1.1
+//  Notes   : Code for controlling a 2 channel solid state relay
+//          : with a user defined variable time on each channel. 
+//          : it is activated with a signal obtained from a sensor
+//          : and the time each is on is shown in a 3 digit display
+//          : with the two displays being controlled with 8 bit shift
+//          : registers daisy chained.
 //****************************************************************
 
 #include <TimedAction.h>
@@ -109,7 +113,7 @@ void refresh(){
     digitalWrite(latchPin, HIGH);
     //delay(1); //you can play with this delay to watch how it loops. try 100 instead of 4
  }
- delay(10);
+ delay(4);
 }
 
 void buttonStatus (){
