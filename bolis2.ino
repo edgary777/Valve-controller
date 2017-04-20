@@ -2,8 +2,8 @@
 //  Name    : shiftOutCode, 4 Digit 7 segment display
 //  Author  : Edgar Solis Vizcarra
 //  Date    : 29 Mar, 2017
-//  Modified: 16 Apr, 2017
-//  Version : 1.1
+//  Modified: 17 Apr, 2017
+//  Version : 1.2
 //  Notes   : Code for controlling a 2 channel solid state relay
 //          : with a user defined variable time on each channel. 
 //          : it is activated with a signal obtained from a sensor
