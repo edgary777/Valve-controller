@@ -37,7 +37,7 @@ unsigned long previousMillis = 0;
 unsigned long previousMillis2 = 0;
 
 ////CONSTANTS
-int baseTime = 100;
+int baseTime = 30;
 int val1 = baseTime;
 int val2 = baseTime;
 long onTime = baseTime;
@@ -57,6 +57,7 @@ void setup() {
   pinMode(button1Pin, INPUT);
   pinMode(button1Pin, INPUT);
   pinMode(sensorPin, INPUT);
+  Serial.begin(115200);
 }
 
 ////FUNCTIONS
@@ -68,10 +69,10 @@ void buttonStatus (){
   button3State = digitalRead(button3Pin);
   button4State = digitalRead(button4Pin);
   if (button1State == LOW) {
-    sp1 ++;
+    sp1 ++ 1;
   }
   if (button2State == LOW) {
-    sp1 --;
+    sp1 -- 1;
   }
   if (button3State == LOW) {
     sp2 ++;
@@ -85,19 +86,20 @@ void loop() {
   sensorState = analogRead(sensorPin);
   unsigned long currentMillis = millis();
   unsigned long currentMillis2 = millis();
-  if (sensorState > 100){
+  Serial.println(onTime-sp2 * 10);
+  if (sensorState > 900){
     previousMillis = currentMillis;
     digitalWrite(relay1, HIGH);
   }
-  if ((sensorState < 100) && (currentMillis - previousMillis >= ((onTime-sp1) * 10))){
+  if ((sensorState < 900) && (currentMillis - previousMillis >= ((onTime-sp1) * 10))){
     previousMillis = currentMillis;
       digitalWrite(relay1, LOW);
   }
-  if (sensorState > 100){
+  if (sensorState > 900){
     previousMillis2 = currentMillis2;
     digitalWrite(relay2, HIGH);
   }
-  if ((sensorState < 100) && (currentMillis2 - previousMillis2 >= ((onTime-sp2) * 10))){
+  if ((sensorState < 900) && (currentMillis2 - previousMillis2 >= ((onTime-sp2) * 10))){
     previousMillis2 = currentMillis2;
       digitalWrite(relay2, LOW);
   }
