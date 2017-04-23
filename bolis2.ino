@@ -85,21 +85,28 @@ void loop() {
   sensorState = analogRead(sensorPin);
   unsigned long currentMillis = millis();
   unsigned long currentMillis2 = millis();
-  if (sensorState > 900){
-    previousMillis = currentMillis;
+  button1State = digitalRead(button1Pin);
+  button2State = digitalRead(button2Pin);
+  if ((button1State == LOW) && (button2State == LOW)) {
     digitalWrite(relay1, HIGH);
-  }
-  if ((sensorState < 900) && (currentMillis - previousMillis >= (onTime-sp1))){
-    previousMillis = currentMillis;
-      digitalWrite(relay1, LOW);
-  }
-  if (sensorState > 900){
-    previousMillis2 = currentMillis2;
     digitalWrite(relay2, HIGH);
+  } else {
+    if (sensorState > 900){
+      previousMillis = currentMillis;
+      digitalWrite(relay1, HIGH);
+    }
+    if ((sensorState < 900) && (currentMillis - previousMillis >= (onTime-sp1))){
+      previousMillis = currentMillis;
+        digitalWrite(relay1, LOW);
+    }
+    if (sensorState > 900){
+      previousMillis2 = currentMillis2;
+      digitalWrite(relay2, HIGH);
+    }
+    if ((sensorState < 900) && (currentMillis2 - previousMillis2 >= (onTime-sp2))){
+      previousMillis2 = currentMillis2;
+        digitalWrite(relay2, LOW);
+    }
+    buttonThread.check();
   }
-  if ((sensorState < 900) && (currentMillis2 - previousMillis2 >= (onTime-sp2))){
-    previousMillis2 = currentMillis2;
-      digitalWrite(relay2, LOW);
-  }
-  buttonThread.check();
 }
