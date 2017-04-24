@@ -57,6 +57,7 @@ void setup() {
   pinMode(button3Pin, INPUT);
   pinMode(button4Pin, INPUT);
   pinMode(sensorPin, INPUT);
+  Serial.begin(2000000);
 }
 
 ////FUNCTIONS
@@ -83,6 +84,9 @@ void buttonStatus (){
 
 void loop() {
   sensorState = analogRead(sensorPin);
+  Serial.println(sensorState, "Sensor");
+  Serial.println(onTime-sp1, "Valvula1");
+  Serial.println(onTime-sp2, "Valvula2");
   unsigned long currentMillis = millis();
   unsigned long currentMillis2 = millis();
   button1State = digitalRead(button1Pin);
@@ -91,19 +95,19 @@ void loop() {
     digitalWrite(relay1, HIGH);
     digitalWrite(relay2, HIGH);
   } else {
-    if (sensorState > 900){
+    if (sensorState > 70){
       previousMillis = currentMillis;
       digitalWrite(relay1, HIGH);
     }
-    if ((sensorState < 900) && (currentMillis - previousMillis >= (onTime-sp1))){
+    if ((sensorState < 70) && (currentMillis - previousMillis >= (onTime-sp1))){
       previousMillis = currentMillis;
         digitalWrite(relay1, LOW);
     }
-    if (sensorState > 900){
+    if (sensorState > 70){
       previousMillis2 = currentMillis2;
       digitalWrite(relay2, HIGH);
     }
-    if ((sensorState < 900) && (currentMillis2 - previousMillis2 >= (onTime-sp2))){
+    if ((sensorState < 70) && (currentMillis2 - previousMillis2 >= (onTime-sp2))){
       previousMillis2 = currentMillis2;
         digitalWrite(relay2, LOW);
     }
