@@ -28,17 +28,13 @@ int button3Pin = 4;     // the number of the pushbutton pin
 int button4Pin = 5;     // the number of the pushbutton pin
 ////Pin connected to sensor
 int sensorPin = A1;     // the number of the sensor pin
-int pausePin = A2;
-
-////Pin connected to pause button
-
+int pausePin = A0;
 ////VARIABLES
 int sp1 = 0;
 int sp2 = 0;
 int sensorState = LOW;
 unsigned long previousMillis = 0;
 unsigned long previousMillis2 = 0;
-int pauseState = 0;
 
 ////CONSTANTS
 int baseTime = 300;
@@ -49,6 +45,7 @@ int button1State = 0;         // variable for reading the pushbutton status
 int button2State = 0;         // variable for reading the pushbutton status
 int button3State = 0;         // variable for reading the pushbutton status
 int button4State = 0;         // variable for reading the pushbutton status
+int pauseState = 0;
 
 
 void setup() {
@@ -72,6 +69,7 @@ void buttonStatus (){
   button2State = digitalRead(button2Pin);
   button3State = digitalRead(button3Pin);
   button4State = digitalRead(button4Pin);
+  pauseState = digitalRead(pausePin);
   if (button1State == LOW) {
     sp1 = sp1 - 5;
   }
@@ -88,39 +86,37 @@ void buttonStatus (){
 
 void loop() {
   sensorState = analogRead(sensorPin);  
+  pauseState = analogRead(pausePin);  
+  Serial.println(sensorState);
 //  Serial.print(onTime-sp1);
 //  Serial.print(" v1");
 //  Serial.print("\n");
 //  Serial.print(onTime-sp2);
 //  Serial.print(" v2");
 //  Serial.print("\n");
-//  Serial.print(pause);
-//  Serial.print("\n");
+//  Serial.println(onTime-sp1, "Valvula1");
+//  Serial.println(onTime-sp2, "Valvula2");
   unsigned long currentMillis = millis();
   unsigned long currentMillis2 = millis();
   button1State = digitalRead(button1Pin);
   button2State = digitalRead(button2Pin);
-  button3State = digitalRead(button3Pin);
-  button4State = digitalRead(button4Pin);
-  pauseState = digitalRead(pausePin);
-  Serial.println(sensorPin);
   if ((button1State == LOW) && (button2State == LOW)) {
     digitalWrite(relay1, HIGH);
     digitalWrite(relay2, HIGH);
-  } else {
-    if (sensorState < 76){
+  } else if (pauseState < 100){
+    if (sensorState < 850){
       previousMillis = currentMillis;
       digitalWrite(relay1, HIGH);
     }
-    if ((sensorState > 76) && (currentMillis - previousMillis >= (onTime-sp1))){
+    if ((sensorState > 850) && (currentMillis - previousMillis >= (onTime-sp1))){
       previousMillis = currentMillis;
         digitalWrite(relay1, LOW);
     }
-    if (sensorState < 76){
+    if (sensorState < 850){
       previousMillis2 = currentMillis2;
       digitalWrite(relay2, HIGH);
     }
-    if ((sensorState > 76) && (currentMillis2 - previousMillis2 >= (onTime-sp2))){
+    if ((sensorState > 850) && (currentMillis2 - previousMillis2 >= (onTime-sp2))){
       previousMillis2 = currentMillis2;
         digitalWrite(relay2, LOW);
     }
