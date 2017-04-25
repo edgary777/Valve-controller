@@ -69,24 +69,29 @@ void buttonStatus (){
   button3State = digitalRead(button3Pin);
   button4State = digitalRead(button4Pin);
   if (button1State == LOW) {
-    sp1 ++;
+    sp1 = sp1 - 5;
   }
   if (button2State == LOW) {
-    sp1 --;
+    sp1 =  sp1 + 5;
   }
   if (button3State == LOW) {
-    sp2 ++;
+    sp2 = sp2 - 5;
   }
   if (button4State == LOW) {
-    sp2 --;
+    sp2 = sp2 + 5;
   }
 }
 
 void loop() {
-  sensorState = analogRead(sensorPin);
-  Serial.println(sensorState, "Sensor");
-  Serial.println(onTime-sp1, "Valvula1");
-  Serial.println(onTime-sp2, "Valvula2");
+  sensorState = analogRead(sensorPin);  
+  Serial.print(onTime-sp1);
+  Serial.print(" v1");
+  Serial.print("\n");
+  Serial.print(onTime-sp2);
+  Serial.print(" v2");
+  Serial.print("\n");
+//  Serial.println(onTime-sp1, "Valvula1");
+//  Serial.println(onTime-sp2, "Valvula2");
   unsigned long currentMillis = millis();
   unsigned long currentMillis2 = millis();
   button1State = digitalRead(button1Pin);
@@ -95,19 +100,19 @@ void loop() {
     digitalWrite(relay1, HIGH);
     digitalWrite(relay2, HIGH);
   } else {
-    if (sensorState > 70){
+    if (sensorState < 77){
       previousMillis = currentMillis;
       digitalWrite(relay1, HIGH);
     }
-    if ((sensorState < 70) && (currentMillis - previousMillis >= (onTime-sp1))){
+    if ((sensorState > 77) && (currentMillis - previousMillis >= (onTime-sp1))){
       previousMillis = currentMillis;
         digitalWrite(relay1, LOW);
     }
-    if (sensorState > 70){
+    if (sensorState < 77){
       previousMillis2 = currentMillis2;
       digitalWrite(relay2, HIGH);
     }
-    if ((sensorState < 70) && (currentMillis2 - previousMillis2 >= (onTime-sp2))){
+    if ((sensorState > 77) && (currentMillis2 - previousMillis2 >= (onTime-sp2))){
       previousMillis2 = currentMillis2;
         digitalWrite(relay2, LOW);
     }
