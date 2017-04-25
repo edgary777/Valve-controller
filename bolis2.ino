@@ -86,18 +86,18 @@ void buttonStatus (){
 }
 
 void loop() {
-  sensorState = analogRead(sensorPin);  
-  pauseState = analogRead(pausePin);  
   Serial.print(onTime-sp1);
   Serial.print(" v1");
   Serial.print("\n");
   Serial.print(onTime-sp2);
   Serial.print(" v2");
   Serial.print("\n");
-  unsigned long currentMillis = millis();
-  unsigned long currentMillis2 = millis();
+  sensorState = analogRead(sensorPin);  
+  pauseState = analogRead(pausePin);  
   button1State = digitalRead(button1Pin);
   button2State = digitalRead(button2Pin);
+  unsigned long currentMillis = millis();
+  unsigned long currentMillis2 = millis();
   if ((button1State == LOW) && (button2State == LOW)) {
     digitalWrite(relay1, HIGH);
     digitalWrite(relay2, HIGH);
@@ -120,4 +120,4 @@ void loop() {
     }
     buttonThread.check();
   }
-}
+  }
