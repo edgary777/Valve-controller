@@ -59,7 +59,6 @@ void setup() {
   pinMode(button4Pin, INPUT);
   pinMode(sensorPin, INPUT);
   pinMode(pausePin, INPUT);
-  Serial.begin(2000000);
 }
 
 ////FUNCTIONS
@@ -86,12 +85,6 @@ void buttonStatus (){
 }
 
 void loop() {
-  Serial.print(onTime-sp1);
-  Serial.print(" v1");
-  Serial.print("\n");
-  Serial.print(onTime-sp2);
-  Serial.print(" v2");
-  Serial.print("\n");
   sensorState = analogRead(sensorPin);  
   pauseState = analogRead(pausePin);  
   button1State = digitalRead(button1Pin);
@@ -118,6 +111,10 @@ void loop() {
       previousMillis2 = currentMillis2;
         digitalWrite(relay2, LOW);
     }
-    buttonThread.check();
+  } 
+  if (pauseState > 100) {
+    digitalWrite(relay1, LOW);
+    digitalWrite(relay2, LOW);    
   }
-  }
+  buttonThread.check();
+}
