@@ -2,8 +2,8 @@
 //  Name    : shiftOutCode, 4 Digit 7 segment display
 //  Author  : Edgar Solis Vizcarra
 //  Date    : 29 Mar, 2017
-//  Modified: 20 Apr, 2017
-//  Version : 1.3
+//  Modified: 25 Apr, 2017
+//  Version : 1.4
 //  Notes   : Code for controlling a 2 channel solid state relay
 //          : with a user defined variable time on each channel. 
 //          : it is activated with a signal obtained from a sensor
@@ -27,25 +27,26 @@ int button2Pin = 3;     // the number of the pushbutton pin
 int button3Pin = 4;     // the number of the pushbutton pin
 int button4Pin = 5;     // the number of the pushbutton pin
 ////Pin connected to sensor
-int sensorPin = A1;     // the number of the sensor pin
+int sensorPin = A1;
+////Pin conected to the pause switch
 int pausePin = A0;
-////VARIABLES
-int sp1 = 0;
-int sp2 = 0;
-int sensorState = LOW;
-unsigned long previousMillis = 0;
-unsigned long previousMillis2 = 0;
 
 ////CONSTANTS
-int baseTime = 300;
-int val1 = baseTime;
-int val2 = baseTime;
-long onTime = baseTime;
-int button1State = 0;         // variable for reading the pushbutton status
-int button2State = 0;         // variable for reading the pushbutton status
-int button3State = 0;         // variable for reading the pushbutton status
-int button4State = 0;         // variable for reading the pushbutton status
-int pauseState = 0;
+int baseTime = 300;                   // The time at which the code starts in ms
+
+////VARIABLES
+int sp1 = 0;                          // The time to diminish the time the first relay is open
+int sp2 = 0;                          // The time to diminish the time the second relay is open
+int sensorState = LOW;                // Variable for reading the sensor status
+unsigned long previousMillis = 0;     // The time for the counter for the first relay
+unsigned long previousMillis2 = 0;    // The base for the counter for the second relay
+long onTime = baseTime;               // The time in ms the relays are open
+int pauseState = 0;                   // variable for reading the pause switch status
+int button1State = 0;                 // variable for reading the pushbutton status
+int button2State = 0;                 // variable for reading the pushbutton status
+int button3State = 0;                 // variable for reading the pushbutton status
+int button4State = 0;                 // variable for reading the pushbutton status
+
 
 
 void setup() {
@@ -62,7 +63,7 @@ void setup() {
 }
 
 ////FUNCTIONS
-  TimedAction buttonThread = TimedAction(100,buttonStatus);
+  TimedAction buttonThread = TimedAction(100,buttonStatus); //This controls how often we check for input from the buttons first value is in ms second is callback function
 
 void buttonStatus (){
   button1State = digitalRead(button1Pin);
