@@ -73,13 +73,13 @@ void buttonStatus (){
   if (button1State == LOW) {
     sp1 = sp1 - 5;
   }
-  if (button2State == LOW) {
+  if ((button2State == LOW) && (sp1 < baseTime)) {
     sp1 =  sp1 + 5;
   }
   if (button3State == LOW) {
     sp2 = sp2 - 5;
   }
-  if (button4State == LOW) {
+  if ((button4State == LOW)&& (sp2 < baseTime)) {
     sp2 = sp2 + 5;
   }
 }
@@ -87,15 +87,12 @@ void buttonStatus (){
 void loop() {
   sensorState = analogRead(sensorPin);  
   pauseState = analogRead(pausePin);  
-  Serial.println(sensorState);
-//  Serial.print(onTime-sp1);
-//  Serial.print(" v1");
-//  Serial.print("\n");
-//  Serial.print(onTime-sp2);
-//  Serial.print(" v2");
-//  Serial.print("\n");
-//  Serial.println(onTime-sp1, "Valvula1");
-//  Serial.println(onTime-sp2, "Valvula2");
+  Serial.print(onTime-sp1);
+  Serial.print(" v1");
+  Serial.print("\n");
+  Serial.print(onTime-sp2);
+  Serial.print(" v2");
+  Serial.print("\n");
   unsigned long currentMillis = millis();
   unsigned long currentMillis2 = millis();
   button1State = digitalRead(button1Pin);
