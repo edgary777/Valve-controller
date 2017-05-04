@@ -14,13 +14,12 @@
 
 #include <TimedAction.h>
   
-
-//Pin connected to ST_CP of 74HC595
-int latchPin = 8;
-//Pin connected to SH_CP of 74HC595
-int clockPin = 12;
 ////Pin connected to DS of 74HC595
-int dataPin = 11;
+int dataPin = 8;
+//Pin connected to ST_CP of 74HC595
+int latchPin = 9;
+//Pin connected to SH_CP of 74HC595
+int clockPin = 10;
 ////Pin connected to IN1 of SSR
 int relay1 = 6;
 ////Pin connected to IN2 of SSR
@@ -112,14 +111,14 @@ void refresh(){
     // shift out the bits:
     shiftOut(dataPin, clockPin, LSBFIRST, digz[h]);
     shiftOut(dataPin, clockPin, LSBFIRST, number1);
-    //delay(1);
+    //delay(100);
     shiftOut(dataPin, clockPin, LSBFIRST, number2);
     delay(2);
     //take the latch pin high so the LEDs will light up:
     digitalWrite(latchPin, HIGH);
     //delay(1); //you can play with this delay to watch how it loops. try 100 instead of 4
  }
- delay(10);
+// delay(10);
 }
 
 void buttonStatus (){
