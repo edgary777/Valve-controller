@@ -38,25 +38,25 @@ int pausePin = A0;
 int baseTime = 300;                   // The time at which the code starts in ms
 ////BYTES TEMPLATES FOR SHIFTOUT
 byte digz[4] = {
-  B10010000,
-  B01001000,
   B00100100,
+  B01001000,
+  B10010000,
   B00000000
 };
 ////BYTES FOR THE NUMBERS
 byte numbers[10] =
 {
-//ABCDEFG
+//ABCDEFGP
  B00000011, // 0
- B10011111, // 1
+ B11110011, // 1
  B00100101, // 2
- B00001101, // 3
- B10011001, // 4
+ B01100001, // 3
+ B11010001, // 4
  B01001001, // 5
- B01000001, // 6
- B00011111, // 7
+ B00001001, // 6
+ B11100011, // 7
  B00000001, // 8
- B00001001  // 9
+ B01000001  // 9
 };
 
 ////VARIABLES
