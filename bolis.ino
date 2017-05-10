@@ -88,6 +88,7 @@ void setup() {
   pinMode(button4Pin, INPUT);
   pinMode(sensorPin, INPUT);
   pinMode(pausePin, INPUT);
+  Serial.begin(115200);
 }
 
 ////FUNCTIONS
@@ -147,24 +148,25 @@ void loop() {
   button1State = digitalRead(button1Pin);
   button2State = digitalRead(button2Pin);
   unsigned long currentMillis = millis();
+  Serial.println(sensorState);
   unsigned long currentMillis2 = millis();
   if ((button1State == LOW) && (button2State == LOW)) {
     digitalWrite(relay1, HIGH);
     digitalWrite(relay2, HIGH);
   } else if (pauseState < 100){
-    if (sensorState < 850){
+    if (sensorState < 770){
       previousMillis = currentMillis;
       digitalWrite(relay1, HIGH);
     }
-    if ((sensorState > 850) && (currentMillis - previousMillis >= (onTime-sp1))){
+    if ((sensorState > 770) && (currentMillis - previousMillis >= (onTime-sp1))){
       previousMillis = currentMillis;
         digitalWrite(relay1, LOW);
     }
-    if (sensorState < 850){
+    if (sensorState < 770){
       previousMillis2 = currentMillis2;
       digitalWrite(relay2, HIGH);
     }
-    if ((sensorState > 850) && (currentMillis2 - previousMillis2 >= (onTime-sp2))){
+    if ((sensorState > 770) && (currentMillis2 - previousMillis2 >= (onTime-sp2))){
       previousMillis2 = currentMillis2;
         digitalWrite(relay2, LOW);
     }
